@@ -22,8 +22,4 @@ add_custom_target(
 #        COMMAND echo --------------------------- cpplint ---------------------------
 #        COMMAND python3 -m cpplint
 #        ${ALL_SOURCE_FILES}
-
-        COMMAND echo --------------------------- scan-build ---------------------------
-        COMMAND scan-build
-        make main
 )
