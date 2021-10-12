@@ -26,6 +26,7 @@ script:
     - cd build
     - cmake .. -DCMAKE_BUILD_TYPE=$BUILD_CONFIGURATION
     - make clangformat
+    - make cppcheck
     - cmake --build .
     - ctest --output-on-failure
     - valgrind --leak-check=yes ./runUnitTests
@@ -46,6 +47,5 @@ deploy:
 
 after_success:
 - cd ${TRAVIS_BUILD_DIR}
-- mkdir coverage
-- gcovr -r ${TRAVIS_BUILD_DIR} --html --html-details -o ./coverage/details.html
-- make cppcheck
+#- mkdir coverage
+#- gcovr -r ${TRAVIS_BUILD_DIR} --html --html-details -o ./coverage/details.html
