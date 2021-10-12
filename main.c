@@ -1,3 +1,5 @@
+// Copyright [year] <Copyright Owner>
+
 #include "main.h"
 
 #include <stdio.h>

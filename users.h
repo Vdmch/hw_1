@@ -1,3 +1,5 @@
+// Copyright [year] <Copyright Owner>
+
 #pragma once
 
 #include <stdio.h>

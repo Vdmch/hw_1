@@ -25,8 +25,7 @@ script:
     - mkdir build
     - cd build
     - cmake .. -DCMAKE_BUILD_TYPE=$BUILD_CONFIGURATION
-    - make clangformat
-    - make cppcheck
+    - make analysers
     - cmake --build .
     - ctest --output-on-failure
     - valgrind --leak-check=yes ./runUnitTests

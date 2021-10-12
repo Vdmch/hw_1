@@ -4,7 +4,6 @@
 
 set(test_files test_func.cpp)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pthread  -static-libtsan")
-set (CMAKE_CXX_STANDARD 17)
 
 # Добавление файлов googletest
 set(GOOGLETEST_ROOT googletest/googletest CACHE STRING "Google Test source root")

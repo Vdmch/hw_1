@@ -1,3 +1,5 @@
+// Copyright [year] <Copyright Owner>
+
 #include "users.h"
 
 #include <ctype.h>
@@ -114,6 +116,7 @@ node* read_db(FILE* data_file) {
   // Создаем первую ноду
   node* first_node = (node*)malloc(sizeof(node));
   if (first_node == NULL) return NULL;
+  first_node->next_node = NULL;
 
   // Заполняем первого пользователя
   node* selNode = first_node;
@@ -131,6 +134,7 @@ node* read_db(FILE* data_file) {
     node* next_node = (node*)malloc(sizeof(node));
     if (next_node == NULL) {
       free_user(first_user);
+      free_node(first_node);
       return NULL;
     }
 
@@ -157,7 +161,7 @@ int print_users_wirh_code(node* first_node, const char code[4]) {
   printf("Найденные пользователи: \n");
   for (node* next_node = first_node; next_node != NULL;
        next_node = next_node->next_node) {
-       sel_user = next_node->sel_user;
+    sel_user = next_node->sel_user;
 
     if (!strcmp(sel_user->network_code, code)) {
       printf("    %s%s  %s\n", sel_user->network_code, sel_user->number,
