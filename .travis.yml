@@ -41,8 +41,7 @@ script:
     - scan-build make main
     - # ====================================== valgrind =========================================
     - # =========================================================================================
-    - valgrind --leak-check=yes ./runUnitTests
-    - valgrind --leak-check=yes ./runUnitTests_thread
+    - valgrind --leak-check=yes ./runUnitTests_valgrind
     
 deploy:
     # выкладываем tagged-коммиты на GitHub Releases:
