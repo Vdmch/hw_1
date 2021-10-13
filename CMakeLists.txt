@@ -13,7 +13,6 @@ set(lib_files users.c users.h)
 if(CMAKE_BUILD_TYPE STREQUAL "Debug")
     include(cmake_files/analysers.cmake)
     include (cmake_files/tests.cmake)
-    include (CTest)
 endif()
 
 add_executable(main ${progr_files})
