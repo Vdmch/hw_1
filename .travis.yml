@@ -47,7 +47,7 @@ script:
 deploy:
     # выкладываем tagged-коммиты на GitHub Releases:
     provider:     releases
-    deploy.skip_cleanup: true
+    skip_cleanup: true
     overwrite:    true
     file:
         - "${TRAVIS_BUILD_DIR}/build/main"
