@@ -42,32 +42,19 @@ script:
     - # ====================================== valgrind =========================================
     - # =========================================================================================
     - valgrind --leak-check=yes ./runUnitTests_valgrind
+    - make coverage
     
 deploy:
     # выкладываем tagged-коммиты на GitHub Releases:
     provider:     releases
-    file:         <package-file>
-    skip_cleanup: true
+    deploy.skip_cleanup: true
     overwrite:    true
+    file:
+        - "${TRAVIS_BUILD_DIR}/build/main"
+        - "${TRAVIS_BUILD_DIR}/build/coverage"
 
-    api_key:
-        secure:   <encrypted-github-token>
+    api_key: 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
 
     on:
         tags:     true
 
-after_success:
-- cd ${TRAVIS_BUILD_DIR}
-- cd ${TRAVIS_BUILD_DIR}/build
-- make coverage
-- 
-
-deploy:
-  provider: releases
-  api_key: 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
-  file:
-    - "${TRAVIS_BUILD_DIR}/build/main"
-    - "${TRAVIS_BUILD_DIR}/build/coverage"
-    deploy.skip_cleanup: true
-  on:
-    tags: true
