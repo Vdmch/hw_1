@@ -1,5 +1,4 @@
 dist:     focal     
-sudo:     required  # используем Virtual Machine (а не Docker container)
 
 language: cpp       # на практике разницы между специфичным для C++ окружением
                     # и, скажем, python -- никакой. Но пусть будет cpp.
@@ -60,4 +59,13 @@ deploy:
 after_success:
 - cd ${TRAVIS_BUILD_DIR}/build
 - make coverage
-- ARTIFACTS_PATHS="${TRAVIS_BUILD_DIR}/build/main:${TRAVIS_BUILD_DIR}/build/coverage"
+- ARTIFACTS_PATHS=":"
+
+deploy:
+  provider: releases
+  api_key: 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
+  file:
+    - "${TRAVIS_BUILD_DIR}/build/main"
+    - "${TRAVIS_BUILD_DIR}/build/coverage"
+  on:
+    tags: true
