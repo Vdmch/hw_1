@@ -57,9 +57,10 @@ deploy:
         tags:     true
 
 after_success:
+- cd ${TRAVIS_BUILD_DIR}
 - cd ${TRAVIS_BUILD_DIR}/build
 - make coverage
-- ARTIFACTS_PATHS=":"
+- 
 
 deploy:
   provider: releases
@@ -67,5 +68,6 @@ deploy:
   file:
     - "${TRAVIS_BUILD_DIR}/build/main"
     - "${TRAVIS_BUILD_DIR}/build/coverage"
+    deploy.skip_cleanup: true
   on:
     tags: true
