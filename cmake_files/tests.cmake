@@ -29,7 +29,6 @@ add_executable(runUnitTests_valgrind ${test_files})
 target_link_libraries(runUnitTests_valgrind GTest::Main test_lib pthread gcov)
 target_link_libraries(test_lib GTest::Main pthread gcov)
 
-target_compile_options(runUnitTests_valgrind PRIVATE -O0 -g --coverage)
-target_compile_options(test_lib PRIVATE -O0 -g --coverage)
+target_compile_options(runUnitTests_valgrind PRIVATE -O0 -g)
 
 add_test(runUnitTests_valgrind runUnitTests_valgrind)

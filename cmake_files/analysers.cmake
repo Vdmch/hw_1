@@ -27,3 +27,15 @@ add_custom_target(
 #        COMMAND python3 -m cpplint
 #        ${ALL_SOURCE_FILES}
 )
+
+add_custom_target(
+        coverage
+        COMMAND mkdir
+        ./coverage
+
+        COMMAND gcovr
+        -r ../
+        -f ../src/
+        --html --html-details
+        -o ./coverage/details.html
+)

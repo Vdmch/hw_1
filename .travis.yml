@@ -58,6 +58,6 @@ deploy:
         tags:     true
 
 after_success:
-- cd ${TRAVIS_BUILD_DIR}
-#- mkdir coverage
-#- gcovr -r ${TRAVIS_BUILD_DIR} --html --html-details -o ./coverage/details.html
+- cd ${TRAVIS_BUILD_DIR}/build
+- make coverage
+- ARTIFACTS_PATHS="${TRAVIS_BUILD_DIR}/build/main:${TRAVIS_BUILD_DIR}/build/coverage"
