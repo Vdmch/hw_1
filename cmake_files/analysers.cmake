@@ -41,3 +41,4 @@ add_custom_target(
         --html --html-details
         -o ./coverage/details.html
 )
+
