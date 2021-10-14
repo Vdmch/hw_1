@@ -51,7 +51,9 @@ deploy:
     overwrite:    true
     file:
         - "${TRAVIS_BUILD_DIR}/build/main"
-        - "${TRAVIS_BUILD_DIR}/build/coverage"
+        - "${TRAVIS_BUILD_DIR}/build/coverage/details.html"
+        - "${TRAVIS_BUILD_DIR}/build/coverage/details.src_main.c.html"
+        - "${TRAVIS_BUILD_DIR}/build/coverage/details.src_users.c.html"
 
     api_key: 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
 
