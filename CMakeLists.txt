@@ -10,12 +10,12 @@ if(WITH_COVERAGE)
     include(cmake_files/coverage.cmake)
     add_compile_options(--coverage)
     add_link_options(--coverage)
+    set(WITH_TESTS ON)
 endif()
 
 if(WITH_ANALYSERS)
     set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
     include(cmake_files/analysers.cmake)
-    set(WITH_TESTS ON)
 endif()
 
 if(WITH_TESTS OR WITH_SANITIZERS OR WITH_COVERAGE)
