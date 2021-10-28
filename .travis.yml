@@ -28,10 +28,9 @@ jobs:
  include:
   - stage: TestCoverage
     script:
-     - cd build
-     - cmake .. -DCMAKE_BUILD_TYPE=Debug -DWITH_COVERAGE=1
-     - make  
-     - ctest 
+     - cmake -B build -DWITH_COVERAGE=1
+     - make -C build
+     - cd build && ctest 
      - cd ..
      - curl -Os https://uploader.codecov.io/latest/linux/codecov
      - chmod +x codecov
