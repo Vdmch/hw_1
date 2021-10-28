@@ -1,61 +1,37 @@
-dist:     focal     
-
-language: cpp       # на практике разницы между специфичным для C++ окружением
-                    # и, скажем, python -- никакой. Но пусть будет cpp.
-
-os:
-    # будем прогонять CI и на Linux, и на Mac OS X...
-    - linux
-
-compiler:
-    # ... и с помощью GCC, и Clang
-    - gcc
-
-env:
-    # список переменных окружения, влияющих на матрицу сборки:
-    - BUILD_CONFIGURATION=Debug
+os: linux
+dist: focal
+language: cpp
 
 install:
-    # скрипт настройки среды и установки зависимостей:
-    - source ci/travis/install-$TRAVIS_OS_NAME.sh
+ - sudo apt-get update
+ - sudo apt-get install --yes libgtest-dev
+ - sudo apt-get install --yes gcovr
+
+env:
+ - BUILD=Debug
+ - BUILD=Release
 
 script:
-    # скрипт сборки и тестирования проекта:
-    - cd ${TRAVIS_BUILD_DIR}
-    - mkdir build
-    - cd build
-    - # ======================================= cmake ===========================================
-    - # =========================================================================================
-    - cmake .. -DCMAKE_BUILD_TYPE=$BUILD_CONFIGURATION
-    - # ===================================== analysers =========================================
-    - # =========================================================================================
-    - make analysers
-    - # ======================================= build ===========================================
-    - # =========================================================================================
-    - cmake --build .
-    - # ======================================= ctest ===========================================
-    - # =========================================================================================
-    - ctest --output-on-failure        
-    - # ===================================== scan-build ========================================
-    - # =========================================================================================
-    - scan-build make main
-    - # ====================================== valgrind =========================================
-    - # =========================================================================================
-    - valgrind --leak-check=yes ./runUnitTests_valgrind
-    - make coverage
-    - tar -zcvf coverage.tar.gz coverage/
-    
-deploy:
-    # выкладываем tagged-коммиты на GitHub Releases:
-    provider:     releases
-    skip_cleanup: true
-    overwrite:    true
-    file:
-        - "${TRAVIS_BUILD_DIR}/build/main"
-        - "${TRAVIS_BUILD_DIR}/build/coverage.tar.gz"
+ - cmake -B build -DCMAKE_BUILD_TYPE=$BUILD
+ - make -C build
+ - cd build && ctest --output-on-failure
 
-    api_key: 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
-
-    on:
-        tags:     true
-
+jobs:
+ include:
+  - stage: TestCoverage
+    script:
+     - cmake -B build -DCMAKE_BUILD_TYPE=Debug -DWITH_COVERAGE=1
+     - make -C build all test
+     - curl -Os https://uploader.codecov.io/latest/linux/codecov
+     - chmod +x codecov
+     - ./codecov -f <(gcovr -e '.*/tests/.*' -x)
+  - stage: Sanitaize
+    script:
+     - cmake -B build -DCMAKE_BUILD_TYPE=Debug -DWITH_SANITIZERS=1
+     - make -C build
+     - cd build && ctest --output-on-failure
+  - stage: Valgrind
+    script:
+     - cmake -B build -DCMAKE_BUILD_TYPE=Debug -DWITH_SANITIZERS=1
+     - make -C build
+     - cd build/lib/users/tests/ && valgrind --leak-check=yes ./runUnitTests_valgrind

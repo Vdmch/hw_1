@@ -1,11 +1,8 @@
 // Copyright [year] <Copyright Owner>
 
-#include "main.h"
-
 #include <stdio.h>
 
 #include "users.h"
-
 int main(void) {
   FILE* db_file = fopen("../users.txt", "r");
   node* users = read_db(db_file);
@@ -14,7 +11,6 @@ int main(void) {
   char code[4] = {"\0"};
   char menu_selection = '\0';
   char ch[3];
-  int count = 0;
 
   while (menu_selection != 'e') {
     printf("1 - ввести новый код сети\ne - выход\n");
