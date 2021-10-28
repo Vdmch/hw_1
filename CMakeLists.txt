@@ -23,8 +23,6 @@ if(WITH_TESTS OR WITH_SANITIZERS OR WITH_COVERAGE OR WITH_VALGRIND)
     set(BUILD_TESTS ON)
 endif()
 
-
-
 add_subdirectory(lib/users)
 
 add_executable(main src/main.c)
