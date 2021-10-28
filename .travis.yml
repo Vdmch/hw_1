@@ -49,6 +49,6 @@ jobs:
     script:
      - sudo apt-get install valgrind
 
-     - cmake -B build -DCMAKE_BUILD_TYPE=Debug -WITH_VALGRIND=1
+     - cmake -B build -DWITH_VALGRIND=1
      - make -C build
      - cd build/lib/users/tests/ && valgrind --leak-check=yes ./runUnitTests_valgrind
