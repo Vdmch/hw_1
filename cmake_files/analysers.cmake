@@ -1,4 +1,9 @@
-file(GLOB ALL_SOURCE_FILES ${progr_files} ${lib_files})
+file(
+        GLOB ALL_SOURCE_FILES 
+        src/main.c 
+        lib/users/src/users.c 
+        lib/users/include/users.h
+)
 
 add_custom_target(
         analysers
@@ -20,9 +25,9 @@ add_custom_target(
 
         COMMAND echo -------------------------------------- clang-tidy --------------------------------------
         COMMAND clang-tidy
+        -p ./
         ${ALL_SOURCE_FILES}
         --checks=-clang-analyzer-security.insecureAPI.DeprecatedOrUnsafeBufferHandling
-        --
         COMMAND echo  done: clang-tidy
         
 #        COMMAND echo ---------------------------------------- cpplint ---------------------------------------

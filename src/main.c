@@ -3,9 +3,10 @@
 #include <stdio.h>
 
 #include "users.h"
-int main(void) {
+
+int main(int argc, char* argv[]) {
   FILE* db_file = fopen("../users.txt", "r");
-  node* users = read_db(db_file);
+  node_t* users = read_db(db_file);
   fclose(db_file);
 
   char code[4] = {"\0"};

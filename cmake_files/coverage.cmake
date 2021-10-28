@@ -1,4 +1,9 @@
-file(GLOB ALL_SOURCE_FILES ${progr_files} ${lib_files})
+file(
+        GLOB ALL_SOURCE_FILES 
+        src/main.c 
+        lib/users/src/users.c 
+        lib/users/include/users.h
+)
 
 add_custom_target(
     coverage

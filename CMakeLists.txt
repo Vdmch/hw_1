@@ -6,20 +6,23 @@ set (CMAKE_C_STANDARD 11)
 
 add_compile_options(-Wall -Wextra -pedantic)
 
-option(WITH_COVERAGE "Add coverage estimation")
 if(WITH_COVERAGE)
     include(cmake_files/coverage.cmake)
     add_compile_options(--coverage)
     add_link_options(--coverage)
 endif()
 
-option(WITH_TESTS "Build tests" ON)
 if(WITH_TESTS OR WITH_SANITIZERS OR WITH_COVERAGE)
-    include(cmake_files/analysers.cmake)
     find_package(GTest REQUIRED)
     enable_testing()
     set(BUILD_TESTS ON)
 endif()
+
+if(WITH_ANALYSERS)
+    set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+    include(cmake_files/analysers.cmake)
+endif()
+
 
 add_subdirectory(lib/users)
 

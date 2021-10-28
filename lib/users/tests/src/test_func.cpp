@@ -130,7 +130,7 @@ TEST(read_db_func, memleak){
   FILE* tst_file = fopen("../../../../lib/users/tests/test_users.txt", "r");
   if(tst_file == NULL) FAIL();
 
-  node* first_node = read_db(tst_file);
+  node_t* first_node = read_db(tst_file);
   fclose(tst_file);
 
 

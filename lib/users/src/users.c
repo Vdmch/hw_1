@@ -56,10 +56,10 @@ void free_user(user* sel_user) {
   }
 }
 
-int free_node(node* sel_node) {
+int free_node(node_t* sel_node) {
   int counter = 0;
 
-  node* next_node = NULL;
+  node_t* next_node = NULL;
   while (sel_node != NULL) {
     next_node = sel_node->next_node;
 
@@ -110,16 +110,16 @@ user* read_user(FILE* data_file) {
 
 // Функция добавления пользователей из файла
 
-node* read_db(FILE* data_file) {
+node_t* read_db(FILE* data_file) {
   if (data_file == NULL) return NULL;
 
   // Создаем первую ноду
-  node* first_node = (node*)malloc(sizeof(node));
+  node_t* first_node = (node_t*)malloc(sizeof(node_t));
   if (first_node == NULL) return NULL;
   first_node->next_node = NULL;
 
   // Заполняем первого пользователя
-  node* selNode = first_node;
+  node_t* selNode = first_node;
   selNode->sel_user = read_user(data_file);
 
   if (first_node->sel_user == NULL) {
@@ -131,7 +131,7 @@ node* read_db(FILE* data_file) {
 
   // Добавляем пока не получим ошибку чтения пользователя
   while (first_user != NULL) {
-    node* next_node = (node*)malloc(sizeof(node));
+    node_t* next_node = (node_t*)malloc(sizeof(node_t));
     if (next_node == NULL) {
       free_user(first_user);
       free_node(first_node);
@@ -152,14 +152,14 @@ node* read_db(FILE* data_file) {
 
 // Выводим ользователей с заданным кодом сети
 
-int print_users_wirh_code(node* first_node, const char code[4]) {
+int print_users_wirh_code(node_t* first_node, const char code[4]) {
   for (int i = 0; i < 3; i++) {
     if (!isdigit(code[i])) return 1;
   }
   if (code[3] != '\0') return 1;
   user* sel_user = NULL;
   printf("Найденные пользователи: \n");
-  for (node* next_node = first_node; next_node != NULL;
+  for (node_t* next_node = first_node; next_node != NULL;
        next_node = next_node->next_node) {
     sel_user = next_node->sel_user;
 
