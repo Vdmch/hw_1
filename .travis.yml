@@ -21,7 +21,7 @@ jobs:
   - stage: TestCoverage
     script:
      - sudo pip install gcovr
-     
+
      - cmake -B build -DWITH_COVERAGE=1
      - make -C build
      - cd build && ctest 

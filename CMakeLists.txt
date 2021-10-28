@@ -17,7 +17,7 @@ if(WITH_ANALYSERS)
     include(cmake_files/analysers.cmake)
 endif()
 
-if(WITH_TESTS OR WITH_SANITIZERS OR WITH_COVERAGE)
+if(WITH_TESTS OR WITH_SANITIZERS OR WITH_COVERAGE OR WITH_VALGRIND)
     find_package(GTest REQUIRED)
     enable_testing()
     set(BUILD_TESTS ON)
