@@ -12,16 +12,18 @@ if(WITH_COVERAGE)
     add_link_options(--coverage)
 endif()
 
+if(WITH_ANALYSERS)
+    set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+    include(cmake_files/analysers.cmake)
+    set(WITH_TESTS ON)
+endif()
+
 if(WITH_TESTS OR WITH_SANITIZERS OR WITH_COVERAGE)
     find_package(GTest REQUIRED)
     enable_testing()
     set(BUILD_TESTS ON)
 endif()
 
-if(WITH_ANALYSERS)
-    set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
-    include(cmake_files/analysers.cmake)
-endif()
 
 
 add_subdirectory(lib/users)

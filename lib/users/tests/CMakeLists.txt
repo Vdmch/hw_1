@@ -26,6 +26,16 @@ if(WITH_SANITIZERS)
     target_link_options(runUnitTests_thread PUBLIC -fno-omit-frame-pointer -static-libasan -fsanitize=thread)
 endif()
 
+if(WITH_ANALYSERS)
+    # Добавление тестов с санитайзерами undefined, leak и address
+    add_executable(runUnitTests ${test_files})
+    target_link_libraries(runUnitTests PUBLIC ${target_lib} GTest::Main)
+
+    add_test(NAME runUnitTests COMMAND runUnitTests)    
+    target_compile_options(runUnitTests PUBLIC -O0 -g -static-libasan -fno-omit-frame-pointer)
+    target_link_options(runUnitTests PUBLIC -static-libasan -fno-omit-frame-pointer)
+endif()
+
 option(WITH_VALGRIND "Add valgrind target")
 if(WITH_VALGRIND)
     # Добавление тестов с санитайзером valgrind

@@ -28,8 +28,11 @@ jobs:
  include:
   - stage: TestCoverage
     script:
-     - cmake -B build -DCMAKE_BUILD_TYPE=Debug -DWITH_COVERAGE=1
-     - make -C build all test
+     - cd build
+     - cmake .. -DCMAKE_BUILD_TYPE=Debug -DWITH_COVERAGE=1
+     - make  
+     - ctest 
+     - cd ..
      - curl -Os https://uploader.codecov.io/latest/linux/codecov
      - chmod +x codecov
      - ./codecov -f <(gcovr -e '.*/tests/.*' -x)
@@ -37,7 +40,7 @@ jobs:
     script:
      - cmake -B build -DCMAKE_BUILD_TYPE=Debug -DWITH_SANITIZERS=1
      - make -C build
-     - cd build && make coverage
+     - cd build && make analysers
   - stage: Valgrind
     script:
      - cmake -B build -DCMAKE_BUILD_TYPE=Debug -WITH_VALGRIND=1
