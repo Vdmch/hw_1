@@ -27,7 +27,7 @@ if(WITH_SANITIZERS)
 endif()
 
 if(WITH_COVERAGE)
-    # Добавление тестов с санитайзерами undefined, leak и address
+    # Добавление тестов для оценки покрытия
     add_executable(runUnitTests ${test_files})
     target_link_libraries(runUnitTests PUBLIC ${target_lib} GTest::Main)
 

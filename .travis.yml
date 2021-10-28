@@ -6,14 +6,6 @@ install:
  - sudo apt-get update
  - sudo apt-get install --yes libgtest-dev
  
- - sudo apt-get install clang-format
- - sudo apt-get install clang-tidy
- - sudo apt-get install valgrind
- - sudo apt-get install cppcheck
-
- - sudo pip install scan-build
- - sudo pip install cpplint
- - sudo pip install gcovr
 
 env:
  - BUILD=Debug
@@ -28,6 +20,8 @@ jobs:
  include:
   - stage: TestCoverage
     script:
+     - sudo pip install gcovr
+     
      - cmake -B build -DWITH_COVERAGE=1
      - make -C build
      - cd build && ctest 
@@ -39,9 +33,22 @@ jobs:
     script:
      - cmake -B build -DCMAKE_BUILD_TYPE=Debug -DWITH_SANITIZERS=1
      - make -C build
+     - cd build && ctest --output-on-failure
+  - stage: Analysers
+    script: 
+     - sudo apt-get install clang-format
+     - sudo apt-get install clang-tidy
+     - sudo apt-get install cppcheck
+     - sudo pip install scan-build
+     - sudo pip install cpplint
+
+     - cmake -B build -DCMAKE_BUILD_TYPE=Debug -DWITH_ANALYSERS=1
+     - make -C build
      - cd build && make analysers
   - stage: Valgrind
     script:
+     - sudo apt-get install valgrind
+
      - cmake -B build -DCMAKE_BUILD_TYPE=Debug -WITH_VALGRIND=1
      - make -C build
      - cd build/lib/users/tests/ && valgrind --leak-check=yes ./runUnitTests_valgrind

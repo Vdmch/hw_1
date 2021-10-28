@@ -10,7 +10,6 @@ if(WITH_COVERAGE)
     include(cmake_files/coverage.cmake)
     add_compile_options(--coverage)
     add_link_options(--coverage)
-    set(WITH_TESTS ON)
 endif()
 
 if(WITH_ANALYSERS)
